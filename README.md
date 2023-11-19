@@ -4,7 +4,7 @@
 
 <h2>Project Screenshots:</h2>
 
-<img src="https://iili.io/JnEv6rb.png" alt="project-screenshot" width="400" height="400/">
+<img src="https://iili.io/JnEv6rb.png" alt="project-screenshot" width="800" height="800/">
 
 <h2>🛠️ Installation Steps:</h2>
 
