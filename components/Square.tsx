@@ -12,6 +12,8 @@ export default function Square() {
 
   const [isPlayerOne, setIsPlayerOne] = useState(true);
 
+  const [prevFinalValuesLength, setPrevFinalValuesLength] = useState<number>(0);
+
   // toggle color of the buttons and add data to colorsX and colorsY
   const toggleColor = (
     index: number,
@@ -46,8 +48,8 @@ export default function Square() {
   const { topArrays, leftArrays } = separateArrays(cordinate);
 
   // Get the arrays that have a 4(for x) and 1(for y) diffrence between them
-  const xPairs = pairs(topArrays, 4, isPlayerOne);
-  const yPairs = pairs(leftArrays, 1, isPlayerOne);
+  const xPairs = pairs(topArrays, 4);
+  const yPairs = pairs(leftArrays, 1);
 
   // Final touched for the x and y arrays and set the correct index
   const resultX = xPairs.map((item) => ({
@@ -124,8 +126,7 @@ export default function Square() {
       ? `Blue beat Red ${scores.one}-${scores.two}`
       : `Red beat Blue ${scores.two}-${scores.one}`;
 
-  const [prevFinalValuesLength, setPrevFinalValuesLength] = useState<number>(0);
-
+  // Check the finalValues length between rerenders and if the length changed keeps the current color
   useEffect(() => {
     const player = finalValues.at(length - 1)?.color === "#6CB4EE";
 

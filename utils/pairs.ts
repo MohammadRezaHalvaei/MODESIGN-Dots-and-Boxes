@@ -1,33 +1,20 @@
-export const pairs = (
-  array: (string | number)[][],
-  diffrence: number,
-  isPlayerOne: boolean
-) =>
+export const pairs = (array: (string | number)[][], diffrence: number) =>
   array.flatMap((value, index, arr) => {
-    let maxTimeColor: string = isPlayerOne ? "#BF4F51" : "#6CB4EE";
+    let maxTimeColor: string;
 
-    const validPairs = arr.slice(0, index).map((otherValue) => {
-      const time =
-        typeof value[0] === "string" ? parseInt(value[0], 10) : value[0];
-      const otherTime =
-        typeof otherValue[0] === "string"
-          ? parseInt(otherValue[0], 10)
-          : otherValue[0];
+    const validPairs = arr.slice(0, index).map((secondValue) => {
+      const time = +value[0];
+      const secondTime = +secondValue[0];
 
-      const numericValue =
-        typeof value[1] === "string" ? parseInt(value[1], 10) : value[1];
-      const numericOtherValue =
-        typeof otherValue[1] === "string"
-          ? parseInt(otherValue[1], 10)
-          : otherValue[1];
+      const numericValue = +value[1];
+      const numericSecondValue = +secondValue[1];
 
-      if (Math.abs(numericValue - numericOtherValue) === diffrence) {
-        const minValue = Math.min(numericValue, numericOtherValue);
-        const maxTime = Math.max(time, otherTime);
+      if (Math.abs(numericValue - numericSecondValue) === diffrence) {
+        const minValue = Math.min(numericValue, numericSecondValue);
+        const maxTime = Math.max(time, secondTime);
 
         if (maxTime === time) {
-          // Update maxTimeColor when the current time is greater
-          maxTimeColor = String(value[2]); // Convert to string
+          maxTimeColor = String(value[2]);
         }
 
         return { time: maxTime, value: minValue, color: maxTimeColor };
@@ -35,9 +22,5 @@ export const pairs = (
       return null;
     });
 
-    return validPairs.filter((pair) => pair !== null) as {
-      time: number;
-      value: number;
-      color: string;
-    }[];
+    return validPairs.filter((pair) => pair !== null) as DataItem[];
   });
