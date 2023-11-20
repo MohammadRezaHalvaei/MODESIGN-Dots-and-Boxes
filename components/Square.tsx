@@ -128,7 +128,7 @@ export default function Square() {
 
   // Check the finalValues length between rerenders and if the length changed keeps the current color
   useEffect(() => {
-    const player = finalValues.at(length - 1)?.color === "#6CB4EE";
+    const player = finalValues.at(-1)?.color == "#6CB4EE";
 
     if (finalValues.length > prevFinalValuesLength) {
       setIsPlayerOne(player);
@@ -229,7 +229,7 @@ export default function Square() {
         <a
           href="/"
           className="w-[300px] text-xl bg-blue-500 block px-10 py-7 rounded-lg text-center
-        absolute top-1/2 left-1/2 -translate-y-[120%] -translate-x-[60%]
+          absolute top-1/2 left-1/2 -translate-y-[120%] -translate-x-[60%]
         hover:bg-blue-600 transition-all duration-200 hover:text-white shadow-2xl"
         >
           Reset The Game
