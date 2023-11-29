@@ -3,7 +3,7 @@
 import { pairs } from "@/utils/pairs";
 import { separateArrays } from "@/utils/seperateArrays";
 import { useEffect, useState } from "react";
-import TextWinner, { Case, Default } from "./TextWinner";
+import Switch, { Case, Default } from "./Switch";
 import { DataItem } from "@/types";
 
 export default function Square() {
@@ -142,6 +142,7 @@ export default function Square() {
             style={{ filter: gameEnded ? "blur(2px)" : "" }}
           >
             <div className="dots" />
+
             {(index + 1) % 5 !== 0 && (
               <button
                 className={`w-full h-1.5 rounded-full bg-black ml-1 transition-all duration-200 ${
@@ -216,30 +217,33 @@ export default function Square() {
           />
         ))}
       </div>
+      <h1 className="w-[460px] mx-auto text-center text-xl">
+        <Switch>
+          <Case condition={gameEnded && scores.one === scores.two}>
+            Blue and Red drew
+          </Case>
+          <Case condition={gameEnded && scores.one > scores.two}>
+            Blue beat Red {scores.one}-{scores.two}
+          </Case>
+          <Case condition={gameEnded && scores.one < scores.two}>
+            Red beat Blue {scores.two}-{scores.one}
+          </Case>
+          <Default>It&apos;s {isPlayerOne ? "Blue" : "Red"} Turn</Default>
+        </Switch>
+      </h1>
 
-      <TextWinner>
-        <Case condition={gameEnded && scores.one === scores.two}>
-          Blue and Red drew
-        </Case>
-        <Case condition={gameEnded && scores.one > scores.two}>
-          Blue beat Red {scores.one}-{scores.two}
-        </Case>
-        <Case condition={gameEnded && scores.one < scores.two}>
-          Red beat Blue {scores.two}-{scores.one}
-        </Case>
-        <Default>It&apos;s {isPlayerOne ? "Blue" : "Red"} Turn</Default>
-      </TextWinner>
-
-      {gameEnded && (
-        <a
-          href="/"
-          className="w-[300px] text-xl bg-blue-500 block px-10 py-7 rounded-lg text-center
+      <Switch>
+        <Case condition={gameEnded}>
+          <a
+            href="/"
+            className="w-[300px] text-xl bg-blue-500 block px-10 py-7 rounded-lg text-center
           absolute top-1/2 left-1/2 -translate-y-[120%] -translate-x-[60%]
         hover:bg-blue-600 transition-all duration-200 hover:text-white shadow-2xl"
-        >
-          Reset The Game
-        </a>
-      )}
+          >
+            Reset The Game
+          </a>
+        </Case>
+      </Switch>
     </div>
   );
 }
