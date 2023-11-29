@@ -3,6 +3,8 @@
 import { pairs } from "@/utils/pairs";
 import { separateArrays } from "@/utils/seperateArrays";
 import { useEffect, useState } from "react";
+import TextWinner, { Case, Default } from "./TextWinner";
+import { DataItem } from "@/types";
 
 export default function Square() {
   const [colorsX, setColorsX] = useState<string[]>(Array(20).fill(""));
@@ -110,7 +112,6 @@ export default function Square() {
   const finalValues = processData();
 
   // Calculate scores
-
   const calculateScore = (color: string) =>
     finalValues.filter((item) => item.color === color)?.length;
 
@@ -118,13 +119,6 @@ export default function Square() {
     one: calculateScore("#6CB4EE"),
     two: calculateScore("#BF4F51"),
   };
-
-  const winner =
-    scores.one === scores.two
-      ? `Blue and Red drew`
-      : scores.one > scores.two
-      ? `Blue beat Red ${scores.one}-${scores.two}`
-      : `Red beat Blue ${scores.two}-${scores.one}`;
 
   // Check the finalValues length between rerenders and if the length changed keeps the current color
   useEffect(() => {
@@ -222,9 +216,20 @@ export default function Square() {
           />
         ))}
       </div>
-      <h1 className="w-[460px] mx-auto text-center text-xl">
-        {!gameEnded ? `It's ${isPlayerOne ? "Blue" : "Red"} Turn` : winner}
-      </h1>
+
+      <TextWinner>
+        <Case condition={gameEnded && scores.one === scores.two}>
+          Blue and Red drew
+        </Case>
+        <Case condition={gameEnded && scores.one > scores.two}>
+          Blue beat Red {scores.one}-{scores.two}
+        </Case>
+        <Case condition={gameEnded && scores.one < scores.two}>
+          Red beat Blue {scores.two}-{scores.one}
+        </Case>
+        <Default>It&apos;s {isPlayerOne ? "Blue" : "Red"} Turn</Default>
+      </TextWinner>
+
       {gameEnded && (
         <a
           href="/"
