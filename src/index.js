@@ -1,6 +1,6 @@
 import "./styles.css";
-import React from "react";
-import ReactDOM from "react-dom";
+import React, { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
 import { useActor, useInterpret } from "@xstate/react";
 import { GameBoard } from "./GameBoard";
 import { inspect } from "@xstate/inspect";
@@ -36,4 +36,10 @@ function App() {
 }
 
 const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
+const root = createRoot(rootElement);
+
+root.render(
+  <StrictMode>
+    <App />
+  </StrictMode>
+);
